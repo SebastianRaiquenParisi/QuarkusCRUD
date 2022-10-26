@@ -28,6 +28,17 @@ public class Usuario extends PanacheEntityBase {
 
     }
 
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", dni='" + dni + '\'' +
+                ", localidad='" + localidad + '\'' +
+                '}';
+    }
+
     public String getName() {
         return name;
     }

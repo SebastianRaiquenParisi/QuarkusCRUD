@@ -1,4 +1,4 @@
-package org.byma;
+package org.acme;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -11,7 +11,6 @@ public class Usuario extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-
     public String name;
     public String last_name;
     public String dni;

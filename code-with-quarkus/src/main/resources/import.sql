@@ -1,0 +1,1 @@
+INSERT INTO persona(id, name) VALUES (1,'sagar');

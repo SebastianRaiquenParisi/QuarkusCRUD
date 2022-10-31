@@ -1,10 +1,16 @@
 package CrudByma;
 
-public class Persona {
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+import javax.persistence.Entity;
+
+@Entity
+public class Persona extends PanacheEntity {
     private Long id;
     private String name;
 
-    public Long getId() {
+    public Long getId(){
         return id;
     }
 

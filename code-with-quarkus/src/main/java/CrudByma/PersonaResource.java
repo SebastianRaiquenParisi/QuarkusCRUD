@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Path("/personas")
 public class PersonaResource {
 
-    public static List<Persona> personas=new ArrayList<>();
+    public static List<Persona> personas=new ArrayList<Persona>();
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonas(){

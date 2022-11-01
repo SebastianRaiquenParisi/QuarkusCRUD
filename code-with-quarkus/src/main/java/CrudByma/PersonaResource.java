@@ -1,5 +1,10 @@
 package CrudByma;
 
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -8,63 +13,40 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Path("/personas")
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+@Path("persona")
+@Produces(APPLICATION_JSON)
+@Consumes(APPLICATION_JSON)
 public class PersonaResource {
 
-    public static List<Persona> personas=new ArrayList<Persona>();
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonas(){
-        return Response.ok(personas).build();
+        @Inject
+        PersonaService personService;
 
-    }
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/size")
-    public Integer countPersonas(){
-        return personas.size();
-    }
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPerson(Persona newPersona){
-        personas.add(newPersona);
-        return Response.ok(personas).build();
-
-    }
-
-    @PUT
-    @Path("{id}/{name}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePersona(
-            @PathParam("id") Long id,
-            @PathParam("name") String name){
-       personas= personas.stream().map(persona->{
-        if (persona.getId().equals(id)){
-            System.out.println(name);
-            persona.setName(name);
-
+        @GET
+        public Response list() {
+            List<Persona> list = personService.list();
+            return Response.ok(list).build();
         }
-        return persona;
-        }).collect(Collectors.toList());
-        return Response.ok(personas).build();
-    }
-    @DELETE
-    @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteMovie(@PathParam("id") Long id){
 
-        Optional<Persona> personaToDelete = personas.stream().filter(persona -> persona.getId().equals(id)).findFirst();
-        boolean removed=false;
-        if(personaToDelete.isPresent()){
-            removed=personas.remove(personaToDelete.get());
+        @POST
+        public Response create(Persona persona) {
+            Persona p = personService.create(persona.getFirstName(), persona.getLastName());
+            return Response.ok(p).build();
         }
-        if (removed){
-            return Response.noContent().build();
+
+        @PUT
+        @Path("{id}")
+        public Response update(@PathParam Long id, Persona p){
+            Persona persona=personService.editar(id,p.getFirstName(),p.getLastName());
+            return Response.ok(persona).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).build();
-
-    }
-
+        @DELETE
+        @Path("{id}")
+        public Response delete (@PathParam  Long id){
+            personService.delete(id);
+            return Response.ok().build();
+        }
 }
+
+

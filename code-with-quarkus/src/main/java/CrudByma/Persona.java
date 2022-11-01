@@ -2,27 +2,43 @@ package CrudByma;
 
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
-public class Persona extends PanacheEntity {
+@Table(name = "persona_prueba")
+public class Persona extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
 
-    public Long getId(){
+    public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
